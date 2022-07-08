@@ -71,12 +71,7 @@ pipeline {
         
         
         stage ('Upload jar to Artifactory')  {
-            
-          when{
-             expression {
-             return env.GIT_BRANCH == 'master';
-               }
-            }   
+              
             
           steps {
           nexusArtifactUploader(
@@ -101,11 +96,6 @@ pipeline {
         
         stage('docker image') {
             
-            when{
-             expression {
-             return env.GIT_BRANCH == 'master';
-               }
-            } 
             
             steps {
                 script {
@@ -115,12 +105,6 @@ pipeline {
         }
         
         stage('docker push on Dockerhub') {
-            
-            when{
-             expression {
-             return env.GIT_BRANCH == 'master';
-               }
-            } 
             
             
             steps {
@@ -135,14 +119,7 @@ pipeline {
         }
         
          stage ('Deploy on AKS cluster'){
-             
-            when{
-             expression {
-             return env.GIT_BRANCH == 'master';
-               }
-            } 
-             
-             
+
             steps{
                 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-secret', namespace: 'default', serverUrl: 'https://aksdemo1-dns-8dbf0ba8.hcp.eastus.azmk8s.io:443') {

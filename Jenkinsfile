@@ -116,7 +116,7 @@ pipeline {
             steps{
                 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-secret', namespace: 'default', serverUrl: 'https://aksdemo1-dns-8dbf0ba8.hcp.eastus.azmk8s.io:443') {
-                  sh 'kubectl create -f .'
+                  sh 'kubectl apply -f .'
                   sh "docker rmi nitindadev/finance-app:latest"
             }}
             }

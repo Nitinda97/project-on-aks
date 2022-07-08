@@ -116,9 +116,9 @@ pipeline {
             steps{
                 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-secret', namespace: 'default', serverUrl: 'https://aksdemo1-dns-8dbf0ba8.hcp.eastus.azmk8s.io:443') {
-                  sh 'export IMAGE_TAG=${env.BUILD_NUMBER}'
+                  sh "export IMAGE_TAG=${env.BUILD_NUMBER}"
                   sh 'kubectl apply -f .'
-                  sh "docker rmi nitindadev/finance-app:latest"
+                  sh "docker rmi nitindadev/finance-app:${env.BUILD_NUMBER}"
             }}
             }
         

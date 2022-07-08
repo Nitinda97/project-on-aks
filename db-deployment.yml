@@ -1,0 +1,52 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: db
+  labels:
+    app: db 
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels:
+      app: db
+  strategy:
+    type: Recreate
+  template: #container template deploy in three pod
+    metadata:
+      name: app-db   #using metadata name
+      labels: 
+        app: db  #this label should match with pod label. 
+    spec: #we define container spec
+        subdomain: db-service
+        hostname: mysql-pod
+        containers:
+          - name: mysql  
+            image: mysql:5.6
+        #
+        #        
+            env:
+              - name: MYSQL_ROOT_PASSWORD 
+                valueFrom:
+                  secretKeyRef:
+                #this two value come from mysqlsecret.yml 
+                    name: db-secret #this is the name of the secret
+                    key: db-password #data of the secret 
+            ports:
+              - containerPort: 3306 
+                name: mysql 
+              #this volume mount is inside my container
+            volumeMounts:
+            - name: db-persistent-volume  
+              mountPath: /var/lib/mysql 
+                #the configmap i need to run inside your container. to update my sql
+            - name: dbconfig  
+              mountPath: /docker-entrypoint-initdb.d #this defination is given in hub.docker.com
+        #but outside your container it need to be attached with mnt data. 
+        volumes: #the name of the volume and the mount will be same
+          - name: db-persistent-volume 
+            persistentVolumeClaim:
+            #mapped to pvc claim we created earlier
+              claimName: db-pv-claim
+          - name: dbconfig
+            configMap: 
+              name: dbconfig

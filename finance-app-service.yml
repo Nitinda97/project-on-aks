@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: finance-app
+  ports:
+  - nodePort: 32000
+    port: 8080
+    targetPort: 8080

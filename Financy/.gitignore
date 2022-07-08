@@ -1,0 +1,6 @@
+target
+.env
+.idea/**
+Financy.iml
+lib/
+jenkins.gdsl

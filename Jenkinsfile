@@ -74,7 +74,7 @@ pipeline {
             
           when{
              expression {
-             return env.GIT_BRANCH == 'origin/staging';
+             return env.GIT_BRANCH == 'master';
                }
             }   
             
@@ -103,7 +103,7 @@ pipeline {
             
             when{
              expression {
-             return env.GIT_BRANCH == 'origin/staging';
+             return env.GIT_BRANCH == 'master';
                }
             } 
             
@@ -118,7 +118,7 @@ pipeline {
             
             when{
              expression {
-             return env.GIT_BRANCH == 'origin/staging';
+             return env.GIT_BRANCH == 'master';
                }
             } 
             
@@ -138,7 +138,7 @@ pipeline {
              
             when{
              expression {
-             return env.GIT_BRANCH == 'origin/staging';
+             return env.GIT_BRANCH == 'master';
                }
             } 
              

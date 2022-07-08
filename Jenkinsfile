@@ -71,13 +71,7 @@ pipeline {
         
         
         stage ('Upload jar to Artifactory')  {
-            
-          when{
-             expression {
-             return env.GIT_BRANCH == 'origin/staging';
-               }
-            }   
-            
+
           steps {
           nexusArtifactUploader(
           nexusVersion: 'nexus3',
@@ -100,13 +94,7 @@ pipeline {
         
         
         stage('docker image') {
-            
-            when{
-             expression {
-             return env.GIT_BRANCH == 'origin/staging';
-               }
-            } 
-            
+
             steps {
                 script {
                     dockerImage=docker.build("finance-app:${env.BUILD_NUMBER}","-f Financy/Dockerfile .")
@@ -115,14 +103,7 @@ pipeline {
         }
         
         stage('docker push on Dockerhub') {
-            
-            when{
-             expression {
-             return env.GIT_BRANCH == 'origin/staging';
-               }
-            } 
-            
-            
+
             steps {
                 
                 sh "docker tag finance-app:${env.BUILD_NUMBER} nitindadev/finance-app:${env.BUILD_NUMBER}"
@@ -135,12 +116,6 @@ pipeline {
         }
         
          stage ('Deploy on AKS cluster'){
-             
-            when{
-             expression {
-             return env.GIT_BRANCH == 'origin/staging';
-               }
-            } 
              
              
             steps{

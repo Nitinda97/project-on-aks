@@ -7,6 +7,5 @@ spec:
   selector:
     app: finance-app
   ports:
-  - nodePort: 32000
-    port: 8080
+  - port: 8080
     targetPort: 8080

@@ -119,6 +119,16 @@ pipeline {
                   sh 'kubectl apply -f .'
             }}
             }
+        
+        stage('Cleaning up image') { 
+31
+            steps { 
+32
+                sh "docker rmi nitindadev/finance-app:latest" 
+33
+            }
+34
+        } 
             
         
         

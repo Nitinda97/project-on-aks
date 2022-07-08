@@ -21,7 +21,7 @@ spec: #inside your deployment we need to provide spec how this deployment api wi
         
         containers:
           - name: finance-app  
-            image: nitindadev/financeapp:1.0
+            image: aksnitinregistry.azurecr.io/finance-app:latest
             ports:
               - containerPort: 8080
                 name: financeapp 

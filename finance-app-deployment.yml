@@ -22,6 +22,7 @@ spec: #inside your deployment we need to provide spec how this deployment api wi
         containers:
           - name: finance-app  
             image: nitindadev/finance-app:latest
+            imagePullPolicy: Always
             ports:
               - containerPort: 8080
                 name: financeapp 

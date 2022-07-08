@@ -72,12 +72,7 @@ pipeline {
         
         stage ('Upload jar to Artifactory')  {
             
-          when{
-             expression {
-             return env.GIT_BRANCH == 'staging';
-               }
-            }   
-            
+
           steps {
           nexusArtifactUploader(
           nexusVersion: 'nexus3',
@@ -101,12 +96,7 @@ pipeline {
         
         stage('docker image') {
             
-            when{
-             expression {
-             return env.GIT_BRANCH == 'staging';
-               }
-            } 
-            
+ 
             steps {
                 script {
                     dockerImage=docker.build("finance-app:${env.BUILD_NUMBER}","-f Financy/Dockerfile .")
@@ -115,13 +105,7 @@ pipeline {
         }
         
         stage('docker push on Dockerhub') {
-            
-            when{
-             expression {
-             return env.GIT_BRANCH == 'staging';
-               }
-            } 
-            
+  
             
             steps {
                 
@@ -136,13 +120,7 @@ pipeline {
         
          stage ('Deploy on AKS cluster'){
              
-            when{
-             expression {
-             return env.GIT_BRANCH == 'staging';
-               }
-            } 
-             
-             
+        
             steps{
                 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-secret', namespace: 'default', serverUrl: 'https://aksdemo1-dns-8dbf0ba8.hcp.eastus.azmk8s.io:443') {

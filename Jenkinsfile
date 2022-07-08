@@ -95,7 +95,7 @@ pipeline {
         stage('docker image') {
             steps {
                 script {
-                  dockerImage=docker.build("finance-app:latest","-f Financy/Dockerfile .")
+                    dockerImage=docker.build("finance-app:${env.BUILD_NUMBER}","-f Financy/Dockerfile .")
                 }
             }
         }
@@ -103,11 +103,11 @@ pipeline {
         stage('docker push on Dockerhub') {
             steps {
                 
-                sh 'docker tag finance-app:latest nitindadev/finance-app:latest'
+                sh 'docker tag finance-app:${env.BUILD_NUMBER} nitindadev/finance-app:${env.BUILD_NUMBER}'
                 
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
                 
-                sh 'docker push nitindadev/finance-app:latest'
+                sh 'docker push nitindadev/finance-app:${env.BUILD_NUMBER}'
                 
             }
         }
@@ -116,6 +116,7 @@ pipeline {
             steps{
                 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-secret', namespace: 'default', serverUrl: 'https://aksdemo1-dns-8dbf0ba8.hcp.eastus.azmk8s.io:443') {
+                  sh 'export IMAGE_TAG=${env.BUILD_NUMBER}'
                   sh 'kubectl apply -f .'
                   sh "docker rmi nitindadev/finance-app:latest"
             }}

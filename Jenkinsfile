@@ -103,11 +103,11 @@ pipeline {
         stage('docker push on Dockerhub') {
             steps {
                 
-                sh 'docker tag finance-app:${env.BUILD_NUMBER} nitindadev/finance-app:${env.BUILD_NUMBER}'
+                sh "docker tag finance-app:${env.BUILD_NUMBER} nitindadev/finance-app:${env.BUILD_NUMBER}"
                 
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
                 
-                sh 'docker push nitindadev/finance-app:${env.BUILD_NUMBER}'
+                sh "docker push nitindadev/finance-app:${env.BUILD_NUMBER}"
                 
             }
         }

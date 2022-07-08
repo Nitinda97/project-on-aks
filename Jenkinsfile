@@ -62,7 +62,7 @@ pipeline {
         stage('code quality check sonar') {
             
             steps {
-                
+                echo 'Pulled-'+env.GIT_BRANCH
                 sh 'mvn -f Financy/pom.xml clean verify sonar:sonar -Dsonar.projectKey=finance-app -Dsonar.host.url=http://20.84.83.13:9000 -Dsonar.login=sqp_d4fb5046256cb469dd795e0c5905571af36062b0'
             }
             

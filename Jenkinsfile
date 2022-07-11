@@ -122,7 +122,7 @@ pipeline {
 
             steps{
                 
-                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-secret', namespace: 'default', serverUrl: 'https://aksdemo1-dns-8dbf0ba8.hcp.eastus.azmk8s.io:443') {
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-cred', namespace: 'default', serverUrl: 'https://terraform-aks-dev-cluster-bdc10b6c.hcp.eastus.azmk8s.io:443') {
                   sh "kubectl apply -f db-deployment"  
                   sh "export IMAGE_TAG=${env.BUILD_NUMBER}; envsubst < finance-app-deployment.yml | kubectl apply -f -"
                   sh "docker rmi nitindadev/finance-app:${env.BUILD_NUMBER}"
